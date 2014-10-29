@@ -13,5 +13,5 @@
  4. `chmod 755 elasticsearch_*.rb`
  5. `cd /path/to/sensu/conf.d/`
  6. `wget https://github.com/hico-horiuchi/sensu-elasticsearch/master/handler_elasticsearch.json`
- 6. please modify to suit your elasticsearch environment this `handler_elasticsearch.json`
- 7. please restart sensu-server
+ 7. please modify to suit your elasticsearch environment this `handler_elasticsearch.json`
+ 8. please restart sensu-server
