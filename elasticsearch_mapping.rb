@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # Sensu Elasticsearch Mapping Script
 
-url = 'http://133.92.147.250/es/'
+url = 'http://localhost:9200'
 
 checks = [
   'cpu-usage-metrics',
