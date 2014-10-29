@@ -1,15 +1,17 @@
-## sensu metrics handler for Elasticsearch
+## sensu handlers for elasticsearch
 
 #### about
 
- * seusn metrics data post to Elasticserach index.
+ - `elasticsearch_handler.rb`: sensu event data post to elasticserach index
+ - `elasticsearch_metrics.rb`: sensu metrics data post to elasticserach index
 
 #### how to use
 
  1. `cd /path/to/sensu/handlers`
- 1. `wget https://raw.githubusercontent.com/inokappa/sensu-handler-metrics-elasticsearch/master/elasticsearch-metrics.rb` 
- 1. `chmod 755 elasticsearch-metrics.rb`
- 1. `cd /path/to/sensu/conf.d/`
- 1. `wget https://github.com/inokappa/sensu-handler-metrics-elasticsearch/blob/master/elasticsearch-metrics.json`
- 1. Please modify to suit your Elasticsearch environment this file(elasticsearch.json).
- 1. Please restart sensu-server.
+ 2. `wget https://raw.githubusercontent.com/hico-horiuchi/sensu-elasticsearch/master/elasticsearch_handler.rb`
+ 3. `wget https://raw.githubusercontent.com/hico-horiuchi/sensu-elasticsearch/master/elasticsearch_metrics.rb`
+ 4. `chmod 755 elasticsearch_*.rb`
+ 5. `cd /path/to/sensu/conf.d/`
+ 6. `wget https://github.com/hico-horiuchi/sensu-elasticsearch/master/handler_elasticsearch.json`
+ 6. please modify to suit your elasticsearch environment this `handler_elasticsearch.json`
+ 7. please restart sensu-server
