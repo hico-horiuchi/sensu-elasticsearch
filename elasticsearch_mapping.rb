@@ -7,7 +7,8 @@ checks = [
   'cpu-usage-metrics',
   'disk-usage-metrics',
   'memory-metrics-percent',
-  'temperature-metrics'
+  'temperature-metrics',
+  'net-traffic-metrics'
 ]
 
 checks.each do |check|
