@@ -1,22 +1,12 @@
-#!/usr/bin/env ruby
+#!/bin/sh
 # Sensu Elasticsearch Mapping Script
 
-url = 'http://localhost:9200'
+URL=http://localhost:9200
 
-checks = [
-  'cpu-usage-metrics',
-  'disk-usage-metrics',
-  'memory-metrics-percent',
-  'temperature-metrics',
-  'net-traffic-metrics'
-]
-
-checks.each do |check|
-  command = <<-EOS
-curl -XPUT #{url}/_template/#{check} -d '{
+curl -XPUT $URL/_template/sensu-metrics -d '{
   "template": "sensu-metrics-*",
   "mappings": {
-    "#{check}": {
+    "_default_": {
       "numeric_detection" : true,
       "properties": {
         "@timestamp": { "type":"date", "format":"dateOptionalTime" },
@@ -32,9 +22,3 @@ curl -XPUT #{url}/_template/#{check} -d '{
     }
   }
 }'
-  EOS
-  # command = "curl -XDELETE #{url}/_template/#{check}"
-  puts "#{check} #=>"
-  system command
-  puts ''
-end
