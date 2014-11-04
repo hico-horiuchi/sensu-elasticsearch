@@ -17,7 +17,11 @@ class ElasticsearchHandler < Sensu::Handler
   end
 
   def time_out
-    settings['elasticsearch']['time_out'] || 5
+    settings['elasticsearch']['timeout'] || 5
+  end
+
+  def retry_number
+    settings['elasticsearch']['retry'] || 3
   end
 
   def es_index
@@ -48,27 +52,32 @@ class ElasticsearchHandler < Sensu::Handler
       command: @event['check']['command'],
       occurrences: @event['occurrences']
     }
+    success = false
 
-    begin
-      timeout(time_out) do
-        uri = URI "http://#{host}:#{port}/#{es_index}/#{es_type}/#{es_id}"
-        http = Net::HTTP.new uri.host, uri.port
-        request = Net::HTTP::Post.new uri.path, 'content-type' => 'application/json; charset=utf-8'
-        request.body = JSON.dump metrics
+    retry_number.times do
+      begin
+        timeout(time_out) do
+          uri = URI "http://#{host}:#{port}/#{es_index}/#{es_type}/#{es_id}"
+          http = Net::HTTP.new uri.host, uri.port
+          request = Net::HTTP::Post.new uri.path, 'content-type' => 'application/json; charset=utf-8'
+          request.body = JSON.dump metrics
 
-        response = http.request request
-        if response.code =~ /20[01]/
-          puts "request metrics #=> #{metrics}"
-          puts "response body #=> #{response.body}"
-          puts "elasticsearch post ok."
-        else
-          puts "request metrics #=> #{metrics}"
-          puts "response body #=> #{response.body}"
-          puts "elasticsearch post failure. status error code #=> #{response.code}"
+          response = http.request request
+          if response.code =~ /20[01]/
+            puts "request metrics #=> #{metrics}"
+            puts "response body #=> #{response.body}"
+            puts "elasticsearch post ok."
+          else
+            puts "request metrics #=> #{metrics}"
+            puts "response body #=> #{response.body}"
+            puts "elasticsearch post failure. status error code #=> #{response.code}"
+          end
         end
+        success = true
+      rescue Timeout::Error
+        puts "elasticsearch timeout error."
       end
-    rescue Timeout::Error
-      puts "elasticsearch timeout error."
+      break if success
     end
   end
 end
