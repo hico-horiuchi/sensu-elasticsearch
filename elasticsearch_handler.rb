@@ -45,12 +45,8 @@ class ElasticsearchHandler < Sensu::Handler
     metrics = {
       :@timestamp => time_stamp,
       client: @event['client']['name'],
-      address: @event['client']['address'],
       check: @event['check']['name'],
-      output: @event['check']['output'],
-      status: @event['check']['status'],
-      command: @event['check']['command'],
-      occurrences: @event['occurrences']
+      output: @event['check']['output']
     }
     success = false
 

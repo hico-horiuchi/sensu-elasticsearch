@@ -46,11 +46,6 @@ class ElasticsearchMetrics < Sensu::Handler
       v = line.split ' '
       metrics = {
         :@timestamp => time_stamp,
-        client: @event['client']['name'],
-        address: @event['client']['address'],
-        check: @event['check']['name'],
-        status: @event['check']['status'],
-        command: @event['check']['command'],
         key: v[0],
         value: v[1]
       }
