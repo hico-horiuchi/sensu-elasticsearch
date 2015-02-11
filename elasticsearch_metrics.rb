@@ -25,7 +25,7 @@ class ElasticsearchMetrics < Sensu::Handler
   end
 
   def es_index
-    "sensu-metrics-#{DateTime.now.strftime '%Y.%m.%d'}"
+    "#{settings['elasticsearch']['index']}-#{DateTime.now.strftime '%Y.%m.%d'}"
   end
 
   def es_type
