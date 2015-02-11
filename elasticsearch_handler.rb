@@ -33,7 +33,7 @@ class ElasticsearchHandler < Sensu::Handler
   end
 
   def es_id
-    rdm = ((0..9).to_a + ("a".."z").to_a + ("A".."Z").to_a).sample(3).join
+    rdm = ((0..9).to_a + ('a'..'z').to_a + ('A'..'Z').to_a).sample(3).join
     Digest::MD5.new.update rdm
   end
 
@@ -62,7 +62,7 @@ class ElasticsearchHandler < Sensu::Handler
           if response.code =~ /20[01]/
             puts "request metrics #=> #{metrics}"
             puts "response body #=> #{response.body}"
-            puts "elasticsearch post ok."
+            puts 'elasticsearch post ok.'
           else
             puts "request metrics #=> #{metrics}"
             puts "response body #=> #{response.body}"
@@ -71,7 +71,7 @@ class ElasticsearchHandler < Sensu::Handler
         end
         success = true
       rescue Timeout::Error
-        puts "elasticsearch timeout error."
+        puts 'elasticsearch timeout error.'
       end
       break if success
     end
